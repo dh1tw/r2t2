@@ -576,10 +576,15 @@ Display_touch::Display_touch(QSettings *settings, QWidget* /*parent*/) : Display
 	scene->setBackgroundBrush(linearGrad);
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
-	fftGraph = new FFTGraph(settings, 0, 0);
-	scene->addItem(fftGraph);
+
+    fftGraph = new FFTGraph(settings, 0, 0, 0);
+    fftProxy = scene->addWidget(fftGraph);
+//    fftGraph->setGeometry(0, 0, this->width(), this->height());
+
 	filterGraph = new FilterGraph(settings, 0, 0);
 	scene->addItem(filterGraph);
+
+//    scene->addItem(fftGraph);
 
 	smtr = new SMeter(settings);
 	scene->addItem(smtr);
@@ -593,7 +598,7 @@ Display_touch::Display_touch(QSettings *settings, QWidget* /*parent*/) : Display
 	clock = new Clock(settings, 0,0) ;
 	scene->addItem(clock);
 
-	ui->graphicsView->setScene(scene);
+    ui->graphicsView->setScene(scene);
 
 	fftGraph->setMin(-120);
 	fftGraph->setMax(-50);
@@ -613,6 +618,7 @@ Display_touch::Display_touch(QSettings *settings, QWidget* /*parent*/) : Display
 #else
 	//resizeDisp(settings->value("Size",QSize(DSIZE_X,DSIZE_Y)).toSize()); 
 	resize(settings->value("Size",QSize(DSIZE_X,DSIZE_Y)).toSize()); 
+//    fftGraph->setGeometry(0, 0, this->width(), this->height());
 #endif
 
 }
@@ -769,7 +775,7 @@ void Display_touch::setLayout(int l) {
 			items[ITEM_RXFREQ]      = {rxfreq,      36*GRID_SIZE,  7*GRID_SIZE,  1*GRID_SIZE,  1*GRID_SIZE};
 			items[ITEM_TXFREQ]      = {txfreq,      36*GRID_SIZE,  7*GRID_SIZE, 38*GRID_SIZE,  1*GRID_SIZE};
 			items[ITEM_FILTERGRAPH] = {filterGraph, 73*GRID_SIZE, 30*GRID_SIZE,  1*GRID_SIZE,  9*GRID_SIZE};
-			items[ITEM_FFTGRAPH]    = {fftGraph,    73*GRID_SIZE, 30*GRID_SIZE,  1*GRID_SIZE,  9*GRID_SIZE};
+//			items[ITEM_FFTGRAPH]    = {fftGraph,    73*GRID_SIZE, 30*GRID_SIZE,  1*GRID_SIZE,  9*GRID_SIZE};
 
 			items[ITEM_CLOCK]       = {clock,       16*GRID_SIZE,  3*GRID_SIZE, 75*GRID_SIZE,  9*GRID_SIZE};
 			items[ITEM_INPUT]       = {input,       16*GRID_SIZE,  2*GRID_SIZE, 75*GRID_SIZE, 13*GRID_SIZE};
@@ -836,7 +842,7 @@ void Display_touch::setLayout(int l) {
 			items[ITEM_CLOCK]       = {clock,       17*GRID_SIZE,  2*GRID_SIZE, 63*GRID_SIZE, 40*GRID_SIZE};
 			items[ITEM_SMTR]        = {smtr,        16*GRID_SIZE,  6*GRID_SIZE, 81*GRID_SIZE, 36*GRID_SIZE};
 			items[ITEM_FILTERGRAPH] = {filterGraph,100*GRID_SIZE, 60*GRID_SIZE,  0*GRID_SIZE,  0*GRID_SIZE};
-			items[ITEM_FFTGRAPH]    = {fftGraph,   100*GRID_SIZE, 60*GRID_SIZE,  0*GRID_SIZE,  0*GRID_SIZE};
+//			items[ITEM_FFTGRAPH]    = {fftGraph,   100*GRID_SIZE, 60*GRID_SIZE,  0*GRID_SIZE,  0*GRID_SIZE};
 
 			xp =  1*GRID_SIZE; yp = 57*GRID_SIZE; xs =  160*GRID_SIZE; ys = 2*GRID_SIZE; 
 			NEW_LABEL("Server", CMD_CONNECT_INFO); 
@@ -1361,6 +1367,7 @@ void Display_touch::writeSettings() {
 
 void Display_touch::sendCmd(int cmd, int val) {
 	PDEBUG(MSG1, "<-- Display: %s, Par: %i",CmdString[cmd],val);
+
 	emit command(SRC_DISP, cmd, val); 
 }
 

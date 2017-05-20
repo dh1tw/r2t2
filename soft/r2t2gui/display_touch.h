@@ -105,6 +105,7 @@ class Display_touch : public Display_base
 		Numeric *input;
 		Clock *clock;
 		QGraphicsScene *scene;
+        QGraphicsProxyWidget *fftProxy;
 //		QTimer *timer;
 		SMeter *smtr;
 		Ui::Display_touch *ui;

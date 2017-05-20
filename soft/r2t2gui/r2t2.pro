@@ -1,4 +1,5 @@
-QT       += core gui network widgets
+QT       += core gui network widgets opengl
+#qtHaveModule(opengl): QT += opengl
 
 TARGET = r2t2 
 
@@ -60,8 +61,10 @@ win32 {
 	# SOURCES += audio_win32.cpp
 }
 
-HEADERS += control.h sdr.h sdrr2t2.h sdrqtradio.h display_lcd.h display_touch.h display_base.h smeter.h clock.h
+HEADERS += control.h sdr.h sdrr2t2.h sdrqtradio.h display_lcd.h display_touch.h display_base.h smeter.h clock.h \
+    vertex.h
 HEADERS += textbutton.h numeric.h fftGraph.h filterGraph.h analog.h label.h sdrgraphicsitem.h
+HEADERS += vertex.h
 
 unix:!mac {
         #HEADERS += keyreader.h audio.h
@@ -80,3 +83,7 @@ win32 {
 
 FORMS    += display_touch.ui
 
+RESOURCES += \
+    resources.qrc
+
+DISTFILES +=

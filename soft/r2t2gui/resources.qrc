@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>android/res/drawable-hdpi/icon.png</file>
+        <file>android/res/drawable-ldpi/icon.png</file>
+        <file>android/res/drawable-mdpi/icon.png</file>
+        <file>shaders/simple.frag</file>
+        <file>shaders/simple.vert</file>
+    </qresource>
+</RCC>
